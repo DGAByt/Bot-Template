@@ -12,9 +12,7 @@ var play = require("google-play-scraper");
 Natsumi.on("ready", () => {
   console.log("Tu Bot esta en linea.");
   setInterval(() => {
-    let estados = [
-      `Viendo ${Natsumi.guilds.cache.size} servidores`
-    ];
+    let estados = [`Viendo ${Natsumi.guilds.cache.size} servidores`];
     let chase_all = Math.floor(Math.random() * estados.length);
     Natsumi.user.setPresence({
       status: "online",
@@ -24,13 +22,15 @@ Natsumi.on("ready", () => {
       },
     });
   }, 15000);
-
 });
 
 let prefix = config.prefix;
 let Developer = config.developer;
 let NatsumiID = config.botid;
 let color = config.color;
+let nombre = config.nombre;
+let invitacion = config.invitacion;
+let servidor = config.servidor;
 
 Natsumi.on("message", async (msg) => {
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -40,11 +40,11 @@ Natsumi.on("message", async (msg) => {
 
   ////////// Comandos de MessageReaction //////////
 
-  if (message.content.toLowerCase().startsWith("hola")){
+  if (msg.content.toLowerCase().startsWith("hola")) {
     msg.react("👋");
-  } else if (message.content.toLowerCase().startsWith("adios")){
+  } else if (msg.content.toLowerCase().startsWith("adios")) {
     msg.react("👋");
-  } else if (msg.content === "F"){
+  } else if (msg.content === "F") {
     msg.react("🇫");
   }
 
@@ -1033,8 +1033,8 @@ Natsumi.on("message", async (msg) => {
       msg.channel.send({ embed });
     } else {
       embed
-        .setTitle("Comandos de Natsumi")
-        .setDescription("Hola me llamo Natsumi y estos son mis comandos.")
+        .setTitle(`Comandos de ${nombre}`)
+        .setDescription(`Hola me llamo ${nombre} y estos son mis comandos.`)
         .addField(
           "Comandos Útiles",
           " `ping` `avatar` `jumbo` `playstore` `reportbug`"
@@ -1056,12 +1056,8 @@ Natsumi.on("message", async (msg) => {
           "`angry` `bomb` `bored` `cry` `disgust` `facepalm` `game` `happy` `like` `nope` `pout` `shrug` `sing` `sip` `smug` `think` `vomit` "
         )
         .addField(
-          "¿Encontraste algun bug o te gustaria aportar alguna cosa?",
-          "Si encuentras algun bug o quieres aportar alguna idea puedes usar el comando `reportbug`"
-        )
-        .addField(
           "Links",
-          `[Invitame](https://discord.com/api/oauth2/authorize?client_id=757977333255766128&permissions=8&scope=bot) | [Servidor](https://discord.gg/Y93Dad7)`
+          `[Invitame](${invitacion}) | [Servidor](${servidor})`
         )
         .setTimestamp()
         .setColor(color)
@@ -1110,7 +1106,6 @@ Limite: maximo 100 mensajes
         .then((message) => message.delete({ timeout: 3000 }));
     });
   }
-
 
   ////////// Comandos Random //////////
 
@@ -1350,40 +1345,29 @@ Limite: maximo 100 mensajes
       var totalCores = cpuStat.totalCores();
       var avgClockMHz = cpuStat.avgClockMHz();
       const embed = new Discord.MessageEmbed()
-        .setAuthor("Natsumi", Natsumi.user.avatarURL())
+        .setAuthor(`${nombre}`, Natsumi.user.avatarURL())
         .setThumbnail(Natsumi.user.avatarURL())
-        .addField(
-          "Developer",
-          `<:698308735495569489:770480570333396993> ${Developer}`
-        )
-        .addField(
-          "Servers",
-          `<:kisspngcomputericonsdiscordlogoj:770480964702175282> ${Natsumi.guilds.cache.size}`
-        )
+        .addField("Developer", `${Developer}`)
+        .addField("Servers", ` ${Natsumi.guilds.cache.size}`)
         .addField(
           "CPU",
-          `<:Processorchipcpumemoryram256:771161274083835904> Uso del CPU: ${parseInt(
+          ` Uso del CPU: ${parseInt(
             percent
-          )}% \n <:Processorchipcpumemoryram256:771161274083835904> Cores: ${totalCores} \n <:Processorchipcpumemoryram256:771161274083835904> Frecuencia del CPU: ${parseInt(
+          )}% \n  Cores: ${totalCores} \n  Frecuencia del CPU: ${parseInt(
             avgClockMHz
           )} MHZ`
         )
         .addField(
           "Ram  ",
-          ` <:76512:770478430076141598> Memoria maxima: ${memoria.max} \n <:76512:770478430076141598> Memoria usada por el bot: ${memoria.usedByProcess} `
+          ` Memoria maxima: ${memoria.max} \n  Memoria usada por el bot: ${memoria.usedByProcess} `
         )
         //.addField('Memoria libre', memoria.free)
         .addField(
           "UpTime",
-          `<:013__Uptime256:771538025086976040> ${days}d ${hours}h ${minutes}m ${parseInt(
-            seconds
-          )}s `
+          ` ${days}d ${hours}h ${minutes}m ${parseInt(seconds)}s `
         )
-        .addField(
-          "Lenguaje",
-          "<:1024pxUnofficial_JavaScript_logo:770478062906769448> JavaScript"
-        )
-        .addField("Libreria", "<:nodejs:770476943832514580> Discord.js v12.3.1")
+        .addField("Lenguaje", " JavaScript")
+        .addField("Libreria", " Discord.js v12.3.1")
         .setColor(color);
       msg.channel.send(embed);
     }); //que envie el embed
@@ -2580,7 +2564,7 @@ Limite: maximo 100 mensajes
     let url2 = url[Math.floor(url.length * Math.random())];
     const embed = new Discord.MessageEmbed()
       .setDescription(`**¡BOOM!** .`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2597,7 +2581,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** Ser aburre mucho.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2614,7 +2598,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** No entiende nada.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2631,7 +2615,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** ha dejado caer sus lágrimas...`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2648,7 +2632,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** se ha disgustado de eso`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2665,7 +2649,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** se ha decepcionado...`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2682,7 +2666,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${authorcanvas}** está jugando algo divertido.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2701,7 +2685,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** anda muy alegre.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2718,7 +2702,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`A **${author}** le gusta eso :D`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2735,7 +2719,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**NOPE!**`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2752,7 +2736,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** no parece estar feliz por ello e.e`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2769,7 +2753,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`Parece que a **${author}** no le importa.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2786,7 +2770,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** está cantando`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2803,7 +2787,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`Parece que **${author}** andaba con mucha sed...`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2820,7 +2804,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** está presumiendo.`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2837,7 +2821,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** se puso a pensar. Hmm...`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 
@@ -2854,7 +2838,7 @@ Limite: maximo 100 mensajes
     let author = msg.author.username;
     const embed = new Discord.MessageEmbed()
       .setDescription(`**${author}** no pudo contenerse y vomitó`)
-      .setColor(0xf7b4b4)
+      .setColor(color)
       .setImage(url2)
       .setTimestamp();
 

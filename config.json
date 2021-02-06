@@ -3,5 +3,8 @@
     "prefix": "Tu_Prefix",
     "developer": "Tu_Nombre_De_Discord",
     "botid": "La_ID_de_Tu_Bot",
+    "nombre": "nombre de tu bot",
+    "servidor": "Tu_Server",
+    "invitacion": "invitacion_de_tu_bot",
     "color": "Color_de_Los_Embeds"
     }

@@ -4,3 +4,7 @@
 [paypal-link]: https://paypal.me/AybarBerrios
 
 ### Bot Multifuncional Para Discord
+
+## Aceca de el Bot
+
+# En esta ocacion les demustro una plantilla de un bot, si realmente quieren aprender a programar esto no les ayudara,
