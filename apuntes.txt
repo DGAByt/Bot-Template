@@ -1,0 +1,11 @@
+https://nodejs.org/es/
+
+npm init -y
+npm install discord.js --save
+npm install figlet
+npm install os
+npm install cpu-stat
+npm install easymaty
+npm install zoro-api
+npm install discord-utilities-js
+npm install google-play-scraper
